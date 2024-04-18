@@ -5,10 +5,11 @@ const {getDb}=require("../config/db")
 
 
 class Product{
-    constructor(title,price,description,image_url){
+    constructor(title,price,description,UserId){
         this.title=title
         this.price=price
         this.description=description
+        this.UserId=UserId
         // this.image_url=image_url
 
     }
@@ -16,14 +17,15 @@ class Product{
         
         const database=getDb()
         database.collection("products").insertOne(this).then((data)=>{
-            console.log(data)
+            // console.log(data)
+            return data
         }).catch((err)=>{
             console.log(err)
         });
     }
-    static findAll(){
+    static findAll(id){
         const database=getDb()
-        return database.collection("products").find().toArray().then((product)=>product)
+        return database.collection("products").find({UserId:id}).toArray().then((product)=>product)
     }
 
     static findById(id) {

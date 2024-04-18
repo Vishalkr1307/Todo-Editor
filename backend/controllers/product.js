@@ -2,9 +2,12 @@ const Product = require("../models/product");
 
 const addProduct = async (req, res) => {
   try {
-    const { title, price, description } = req.body;
-    const product = await new Product(title, price, description);
-    // console.log(product)
+    const user=req.user
+    // console.log(user)
+    const { title, price, description} = req.body;
+    
+    const product = await new Product(title, price, description,user._id);
+    
     await product.save();
 
     return res.status(201).send(product);
@@ -15,7 +18,8 @@ const addProduct = async (req, res) => {
 };
 const getProduct = async (req, res) => {
   try {
-    const product = await Product.findAll();
+    const user=req.user
+    const product = await Product.findAll(user._id);
     // console.log(product)
 
     return res.status(201).send(product);

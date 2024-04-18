@@ -1,6 +1,7 @@
 const User = require("..//models/user");
 // const User = require("..//models/user");
 const bcrypt = require("bcrypt");
+const {newToken}=require("..//utils/token")
 
 const Register = async (req, res, next) => {
   try {
@@ -23,9 +24,11 @@ const Login = async (req, res, next) => {
     if (!checkPassword) {
       return res.status(200).send("password does not match");
     }
+    const token=newToken(user)
 
-    return res.status(200).send(user);
+    return res.status(200).send({user,token});
   } catch (err) {
+    
     return res.status(500).send("bad request");
   }
 };
