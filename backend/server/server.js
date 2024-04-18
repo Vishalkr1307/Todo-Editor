@@ -1,5 +1,5 @@
 const app = require("../index");
-const connect = require("../config/db");
+const {mongoConnect} = require("../config/db");
 const morgan = require("morgan");
 const fs = require("fs");
 const path = require("path");
@@ -22,7 +22,7 @@ if (cluster.isPrimary) {
   app.use(morgan('combined', { stream: accessLogStream }))
 
   app.listen(PORT, async () => {
-    await connect();
+    await mongoConnect();
     console.log(`server listening on ${PORT}`);
   });
 }
