@@ -3,11 +3,13 @@ const app = express()
 const Product=require("./routes/product")
 const User=require("./routes/user")
 const Cart=require("./routes/cart")
+const Order=require("./routes/order")
 app.use(express.json())
 
 app.use('/products',Product)
 app.use('/auth',User)
 app.use("/cart",Cart)
+app.use("/order",Order)
 
 
 
