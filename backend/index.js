@@ -1,9 +1,11 @@
 const express=require("express")
 const app = express()
 const Product=require("./routes/product")
+const User=require("./routes/user")
 app.use(express.json())
 
 app.use('/products',Product)
+app.use('/auth',User)
 
 
 

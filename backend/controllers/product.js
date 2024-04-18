@@ -34,4 +34,24 @@ const getSingleProduct = async (req, res) => {
     return res.status(500).send("Bad Request");
   }
 };
-module.exports = { addProduct, getProduct, getSingleProduct };
+const updateProduct = async (req, res) => {
+  try {
+    const product = await Product.findByIdAndUpdate(req.params.id, req.body);
+
+    return res.status(201).send(product);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send("Bad Request");
+  }
+};
+const deleteProduct = async (req, res) => {
+  try {
+    const product = await Product.findByIdAndDelete(req.params.id);
+
+    return res.status(201).send(product);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send("Bad Request");
+  }
+};
+module.exports = { addProduct, getProduct, getSingleProduct,updateProduct,deleteProduct };

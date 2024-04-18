@@ -37,6 +37,20 @@ class Product{
         query[key] = value;
         return database.collection("products").findOne(query);
     }
+
+    static findByIdAndUpdate(id,data){
+       const database = getDb();
+
+       return database.collection("products").updateOne({_id:new ObjectId(id)},{$set:data}).then((product)=>product)
+
+
+    }
+    static findByIdAndDelete(id) {
+        const database = getDb();
+    
+        return database.collection("products").deleteOne({ _id: new ObjectId(id) });
+    }
+    
     
     
     
