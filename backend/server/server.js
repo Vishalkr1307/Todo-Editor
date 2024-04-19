@@ -1,5 +1,5 @@
 const app = require("../index");
-const {mongoConnect} = require("../config/db");
+const mongoConnect = require("../config/db");
 const morgan = require("morgan");
 const fs = require("fs");
 const path = require("path");
