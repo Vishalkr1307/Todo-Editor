@@ -30,7 +30,7 @@ module.exports = async (email) => {
     otp:hashOtp,
     userId:user._id,
     createdAt:new Date(),
-    expiredAt:new Date(new Date().getTime()+60*1000*2) 
+    expiredAt:new Date(new Date().getTime()+60*1000*30) 
 
 
   })
@@ -74,7 +74,8 @@ const info=await transporter.sendMail({
 return {
     status:`Otp send your ${user?.email}`,
     email:user?.email,
-    userId:user._id
+    userId:user._id,
+    expiredOtp:otpData.expiredAt
 
 }
 

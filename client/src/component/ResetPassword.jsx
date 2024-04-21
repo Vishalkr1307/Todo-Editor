@@ -23,15 +23,11 @@ import { FaGoogle, FaGithub } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { postLoginData } from "../redux/auth/action";
 const initState = {
-  email: "",
   password: "",
 };
 const reducer = (store, { type, payload }) => {
   switch (type) {
-    case "email":
-      return { ...store, email: payload };
     case "password":
       return { ...store, password: payload };
 
@@ -40,39 +36,24 @@ const reducer = (store, { type, payload }) => {
   }
 };
 
-const Login = () => {
+const ResetPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [text, setText] = useReducer(reducer, initState);
   const [loginLodings, setLoginLodings] = useState(true);
-  const { isLoading, isError, sendData, isLogin } = useSelector(
+  const { isLoading, isError, loginData, isLogin } = useSelector(
     (store) => store.auth
   );
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const handleSubmit=()=>{
-    if(text){
-
-      dispatch(postLoginData(text))
-    }
-    setLoginLodings(true)
-    setTimeout(() => {
-      setLoginLodings(false)
-    }, 2000);
-
-  }
-  useEffect(()=>{
-    if(isLogin && sendData?.userId){
-      navigate(`/auth/otpverification/${sendData?.userId}`,{replace:true,state:{from:location}})
-    }
-
-  },[isLogin,sendData.userId,navigate,location])
-  
-  // 
+  const handleSubmit = () => {
+    console.log(text);
+  };
+  //
 
   return (
-    <HStack px={{base:0,md:2}}>
+    <HStack px={{ base: 0, md: 2 }}>
       <Stack
         width={"50%"}
         height={"100vh"}
@@ -101,27 +82,12 @@ const Login = () => {
         textAlign={"center"}
       >
         <Stack>
-          <Heading>Login To Your Account</Heading>
+          <Heading>Reset Your Password</Heading>
           <Text>
             To Enjoy our cool <span color="blue.500">Features</span>
           </Text>
         </Stack>
-        <Stack spacing={4}>
-          {loginLodings && !isLogin && isError &&<Alert>
-            <AlertIcon/>
-            {isError}
-            </Alert>}
-          
-
-          <FormControl>
-            <FormLabel>Email</FormLabel>
-            <Input
-              type="email"
-              onChange={(e) =>
-                setText({ type: "email", payload: e.target.value })
-              }
-            />
-          </FormControl>
+        <Stack spacing={4} w={{base:"80%",md:'80%'}}>
           <FormControl>
             <FormLabel>Password</FormLabel>
             <InputGroup>
@@ -136,40 +102,14 @@ const Login = () => {
               </InputRightElement>
             </InputGroup>
           </FormControl>
-          <HStack justify={"space-between"}>
-            <Checkbox>Remember it</Checkbox>
-            <Link to="/auth/forgetpassword">
-              <Text
-                color={{ base: "white.400", md: "blue.400" }}
-                pos={"relative"}
-                zIndex={1}
-              >
-                Forget Password
-              </Text>
-            </Link>
-          </HStack>
 
           <Button type="submit" onClick={handleSubmit}>
-            {loginLodings &&isLoading ? <Spinner /> : "Login"}
+            {!isLogin && isLoading ? <Spinner /> : "Reset-Password"}
           </Button>
-          <Stack>
-          <Text>
-            Did't have a account ?<Link to="/auth/register"><span color={'blue.400'}>Register</span></Link>
-          </Text>
         </Stack>
-        </Stack>
-        
-        <HStack spacing={6}>
-          <Tooltip label="Login With Google">
-            <IconButton size={"lg"} icon={<FaGoogle />} />
-          </Tooltip>
-          <Tooltip label="Login with Github">
-            <IconButton size={"lg"} icon={<FaGithub />} />
-          </Tooltip>
-        </HStack>
       </Stack>
     </HStack>
   );
 };
 
-export default Login;
+export default ResetPassword;

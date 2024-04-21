@@ -128,7 +128,7 @@ const ResendOtp = async (req, res) => {
       return res.status(404).send("user not found");
     }
 
-      
+    await OtpSchema.deleteMany({userId:id})
     const sendData = await sentMail(user.email);
     return res.status(200).send(sendData);
   } catch (err) {

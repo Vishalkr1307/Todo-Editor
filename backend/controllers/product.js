@@ -1,7 +1,14 @@
 const Product = require("../models/product");
+const {formatOfError}=require("..//utils/valdation")
+const {validationResult}=require("express-validator")
+
 
 const addProduct = async (req, res) => {
   try {
+    const errror=validationResult(req)
+    if(!errror.isEmpty()){
+       return res.status(404).send(formatOfError(errror.array()).join(","))
+    }
     const user = req.user;
 
     const product = await Product.create({ ...req.body, UserId: user._id });
@@ -36,6 +43,10 @@ const getSingleProduct = async (req, res) => {
 };
 const updateProduct = async (req, res) => {
   try {
+    const errror=validationResult(req)
+    if(!errror.isEmpty()){
+       return res.status(404).send(formatOfError(errror.array()).join(","))
+    }
     const product = await Product.findByIdAndUpdate(req.params.id, req.body,);
     if(!product){
         return res.status(404).send("Product not found");

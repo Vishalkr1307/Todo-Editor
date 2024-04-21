@@ -2,6 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "proxy":"http://localhost:2345",
   "dependencies": {
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^2.8.2",
@@ -14,6 +15,7 @@
     "framer-motion": "^11.1.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^5.1.0",
     "react-redux": "^9.1.1",
     "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
@@ -44,5 +46,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }

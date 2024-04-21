@@ -20,4 +20,9 @@ const passwordChain = () =>
     });
 const otpChain=()=>body("otp").notEmpty().isString().isLength({min:4,max:4}).withMessage("Otp have 4 digit")
 
-module.exports ={formatOfError,emailChain,passwordChain,nameChain,otpChain}
+const titleChain=()=>body('title').notEmpty().withMessage("title not be empty").isString().withMessage("title not be empty")
+const priceChain=()=>body('price').notEmpty().withMessage("price not be empty").isNumeric().withMessage("price not be empty")
+const descriptionChain=()=>body('description').notEmpty().withMessage("description not be empty").isString().withMessage("description not be empty")
+const taskStatusChain=()=>body('taskStatus').notEmpty().withMessage("taskStatus not be empty").isString().withMessage("taskStatus not be empty")
+
+module.exports ={formatOfError,emailChain,passwordChain,nameChain,otpChain,titleChain,priceChain,descriptionChain,taskStatusChain}

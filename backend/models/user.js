@@ -6,7 +6,8 @@ const userSchema=new mongoose.Schema({
     name:{type:String, required:true},
     email:{type:String, required:true},
     password:{type:String, required:true},
-    verifya:{type:Boolean, required:false}  
+    verifya:{type:Boolean, default:false},
+    isPremium:{type:Boolean, default:false},  
 },{
     versionKey:false,
     timestamps:true,
