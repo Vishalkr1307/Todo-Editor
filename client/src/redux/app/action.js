@@ -119,7 +119,10 @@ export const singleProductRequest = (payload) => ({
       headers:{
         Authorization:`Bearer ${token}`
       }
-    }).then((res)=>dispatch(singleProductData(id,token))).catch((err)=>console.log(err.response.data))
+    }).then((res)=>{
+      
+     return dispatch(singleProductData(id,token))
+    }).catch((err)=>console.log(err.response.data))
   }
 
   export const deleteProductData=(payload,token)=>(dispatch)=>{

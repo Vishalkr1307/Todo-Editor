@@ -1,10 +1,13 @@
 import { Box, Button, HStack, Heading, Stack, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import Logout from "./Logout";
+import { useSelector } from "react-redux";
 
 const SideBar = ({product}) => {
     const [serchParam,setSearchParam]=useSearchParams()
     const [searchQuery,setSearchQuery] = useState([])
+    const {isAuth,userDetails}=useSelector((store)=>store.auth)
     const All=product.length
     const personal=product.filter((item)=>item.tags.includes("personal")).length
     const offical=product.filter((item)=>item.tags.includes("offical")).length
@@ -32,8 +35,8 @@ const SideBar = ({product}) => {
     <Stack textAlign={"center"} py={4}>
       <Stack  height={"15vh"}>
         <Heading fontSize={"20"}>Profile-Details</Heading>
-        <Text>Name</Text>
-        <Text>Email</Text>
+        <Text>Name:{userDetails?.name}</Text>
+        <Text>Email:-{userDetails?.email}</Text>
       </Stack>
       <Stack  justify={'center'} align={'center'} height={"50vh"} px={4}>
         <Button   display={'flex'} justifyContent={'space-between'} width={'full'} onClick={()=>handleQuery("all")}>
@@ -53,8 +56,8 @@ const SideBar = ({product}) => {
             <Text>{other}</Text>
         </Button>
       </Stack>
-      <Stack>
-        <Button>LogOut</Button>
+      <Stack px={2}>
+        {isAuth && <Logout/>}
       </Stack>
     </Stack>
   );

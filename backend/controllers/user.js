@@ -1,7 +1,7 @@
 const User = require("..//models/user");
 const OtpSchema=require("..//models/otp")
 const bcrypt = require("bcrypt");
-const { newToken } = require("..//utils/token");
+const { newToken,verifyaToken } = require("..//utils/token");
 const { validationResult } = require("express-validator");
 const { formatOfError } = require("..//utils/valdation");
 const sentMail = require("..//utils/sentMail");
@@ -80,7 +80,7 @@ const OtpVerification = async (req, res) => {
       const token = newToken(updateUser);
       return res
         .status(200)
-        .send({ status: "Your Otp have successfully verified", token });
+        .send({ status: "Your Otp have successfully verified", token,updateUser });
     }
   } catch (err) {
     return res.status(500).send("internal server error");
@@ -154,5 +154,19 @@ const getSingleUser = async (req, res) => {
     return res.status(500).send("bad request");
   }
 };
+const getProfile=async (req, res, next) => {
+  try{
 
-module.exports = { Register, Login, getUser, getSingleUser,OtpVerification,ForgetPassword,ResetPassword,ResendOtp };
+    const user=req.user
+    if(user){
+      return res.status(200).send(user)
+    }
+    return res.status(404).send("token not valid")
+
+  }
+  catch(err){
+    return res.status(500).send("bad request");
+  }
+}
+
+module.exports = { Register, Login, getUser, getSingleUser,OtpVerification,ForgetPassword,ResetPassword,ResendOtp,getProfile };

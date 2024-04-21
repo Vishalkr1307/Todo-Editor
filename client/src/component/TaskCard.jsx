@@ -39,6 +39,7 @@ const TaskCard = ({_id,title,description,price,tags,subTasks}) => {
         </HStack>
         <Stack>
             <Text>{description}</Text>
+            <Text>Amount:-{price}</Text>
         </Stack>
         <CheckboxGroup defaultValue={subTaskStatus}>
              {subTasks.length>0 && subTasks.map((item,ind)=><Checkbox key={ind} value={item.subTasksTitle}>{item.subTasksTitle}</Checkbox>)}

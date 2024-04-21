@@ -17,6 +17,12 @@ import {
   ADD_RESET_PASSWORD_FAILURE,
   ADD_RESET_PASSWORD_REQUEST,
   ADD_RESET_PASSWORD_SUCCESS,
+  GET_PROFILE_FAILURE,
+  GET_PROFILE_REQUEST,
+  GET_PROFILE_SUCCESS,
+  POST_PAYMENT_FAILURE,
+  POST_PAYMENT_REQUEST,
+  POST_PAYMENT_SUCCESS,
 } from "./actionType";
 
 import axios from "axios"
@@ -93,6 +99,31 @@ export const addResendFaliure = (payload) => ({
   type: ADD_RESEND_OTP_FAILURE,
   payload,
 });
+export const postPaymentRequest = (payload) => ({
+  type: POST_PAYMENT_REQUEST,
+  payload,
+});
+export const postPaymentSuccesss = (payload) => ({
+  type: POST_PAYMENT_SUCCESS,
+  payload,
+});
+export const postPaymentFailure = (payload) => ({
+  type: POST_PAYMENT_FAILURE,
+  payload,
+});
+
+export const  getProfileRequest=(payload)=>({
+  type:GET_PROFILE_REQUEST,
+  payload,
+})
+export const  getProfileSuccess=(payload)=>({
+  type:GET_PROFILE_SUCCESS,
+  payload,
+})
+export const  getProfileFailure=(payload)=>({
+  type:GET_PROFILE_FAILURE,
+  payload,
+})
 
 export const postRegisterData=(payload)=>(dispatch)=>{
     dispatch(addRegisterRequest())
@@ -122,4 +153,30 @@ export const postForgetData=(payload)=>(dispatch)=>{
 export const postResetData=(id,payload)=>(dispatch)=>{
   dispatch(addResetRequest())
   axios.post(`/auth/resetpassword/${id}`,payload).then((res)=>dispatch(addResetSuccess(res.data))).catch((err)=>dispatch(addResetFaliure(err.response.data)))
+}
+
+export const getPaymentOrder=(payload)=>(dispatch)=>{
+  return axios.get("/payment/premium",{
+    headers:{
+       Authorization:`Bearer ${payload}`
+    }
+  }).then((res)=>res.data).catch((err)=>err.response.data)
+}
+export const postPaymentOrder=(payload,token)=>(dispatch)=>{
+  dispatch(postPaymentRequest())
+  
+   axios.post("/payment/updatePremium",payload,{
+     headers:{
+      Authorization:`Bearer ${token}`
+     }
+   }).then((res)=>dispatch(postPaymentSuccesss(res.data))).catch((err)=>dispatch(postPaymentFailure(err.response.data)))
+}
+
+export const getProfileData=(payload)=>(dispatch)=>{
+  dispatch(getProfileRequest())
+  axios.get("/auth/profile",{
+    headers:{
+      Authorization:`Bearer ${payload}`
+    }
+  }).then((res)=>dispatch(getProfileSuccess(res.data)))
 }
