@@ -7,12 +7,12 @@ const cluster = require("cluster");
 const clPlus = require("os").cpus().length;
 // const {fork}=require("child_process")
 
-if (cluster.isPrimary) {
-  console.log(`Master ${process.pid} running`);
-  for (var i = 0; i < clPlus; i++) {
-    cluster.fork();
-  }
-} else {
+// if (cluster.isPrimary) {
+//   console.log(`Master ${process.pid} running`);
+//   for (var i = 0; i < clPlus; i++) {
+//     cluster.fork();
+//   }
+// } else {
     var accessLogStream = fs.createWriteStream(path.join(__dirname, '..//','access.log'), { flags: 'a' })
 
   require("dotenv").config();
@@ -25,4 +25,4 @@ if (cluster.isPrimary) {
     await mongoConnect();
     console.log(`server listening on ${PORT}`);
   });
-}
+// }
