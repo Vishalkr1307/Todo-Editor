@@ -2,7 +2,7 @@ const mongoose=require("mongoose")
 require("dotenv").config()
 
 module.exports = ()=>{
-    return mongoose.connect(process.env.DB).then(()=>console.log("Connect to MongoDB")).catch(()=>console.log("Couldn't connect to MongoDB"))
+    return mongoose.connect(process.env.DB).then(()=>console.log("Connect to MongoDB")).catch((err)=>console.log("Couldn't connect to MongoDB",err))
 }
 // const mongoDb = require("mongodb");
 // const MongoClient = mongoDb.MongoClient;
